@@ -7,7 +7,7 @@ class BooksController < ApplicationController
         if params[:category].blank?
         @books = Book.all.order("created_at DESC")
         else
-            @category_id = Category.find_by(name: params[:category]).includes
+            @category_id = Category.find_by(name: params[:category]).id
             @books = Book.where(:category_id => @category_id).order("created_at DESC")
         end
     end
@@ -16,7 +16,7 @@ class BooksController < ApplicationController
         if @book.reviews.blank?
             @average_review = 0
         else
-            @average_review = @book.reviews.average(:rating).round(2)
+            @average_review = @book.reviews.average(:rating)
         end
         
     end
